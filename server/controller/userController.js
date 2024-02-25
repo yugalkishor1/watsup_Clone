@@ -55,7 +55,6 @@ export const checkAuth = async (req,res)=>{
     }
 }
 
-
 export const registerUser = async(req,res)=>{
 
     const {username,email,password} = req.body;
@@ -78,6 +77,19 @@ export const registerUser = async(req,res)=>{
        
     } catch (error) {
         return res.json(error.message)
+    }
+
+}
+export const allUsers = async(req,res)=>{
+
+    try {
+        const allUsers = await userModel.find()   
+
+        if(allUsers){
+            return res.json({status:true,allUsers})
+        }
+    } catch (error) {
+        return res.json({status:false,msg:error.message})
     }
 
 }

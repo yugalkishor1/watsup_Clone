@@ -18,6 +18,7 @@ function Chat() {
         
         if(response.data.status){
           setIsLoggedIn(response.data.status) 
+          setCurrentUser(response.data.user)
         }else{
           navigate("/")
         }
@@ -33,7 +34,7 @@ function Chat() {
     {!isLoggedIn && !currentUser ? <div>Loading....</div> :
     
     <div className='bg-red-700 h-screen flex flex-row'>
-    <Contacts/>
+    <Contacts currentUser={currentUser}/>
     <ChatContainer/>
     </div>
     

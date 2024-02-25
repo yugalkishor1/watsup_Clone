@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import axios from "axios"
 import { useNavigate,Link } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
 
@@ -14,11 +16,17 @@ function Login() {
 			const response = await axios.post("http://localhost:5000/user/login",{email,password})
 			
 			if(response.data.status){
-				navigate("/chat")
+				localStorage.setItem("token",JSON.stringify(response.data.token))
+				toast.success(`${response.data.msg}`)
+
+				setTimeout(()=>{
+					navigate("/chat")
+				},2000)
+				
 				setEmail("")
 				setPassword("")
 			}else{
-				console.log("Response",response.data.msg);
+				toast.error(`${response.data.msg}`)
 			}
 
 		} catch (error) {
@@ -55,6 +63,10 @@ function Login() {
 			<p> Do not have an Account ?
 			<Link to={'/register'} className='hover:text-white hover:underline'>Register</Link>
 			</p>
+			<ToastContainer 
+			closeOnClick
+			autoClose={2000}
+			/>
 		</div>
 )
 }

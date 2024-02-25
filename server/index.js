@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import userRouter from "./routes/userRouter.js"
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 
 const app = express();
 dotenv.config();
@@ -14,8 +15,9 @@ mongoose.connect(process.env.MONGO_URL)
     }).catch(()=>{
         console.log("error connecting with mongodb");
     })
+    app.use(cors())
+app.use(cookieParser())
 
-app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 

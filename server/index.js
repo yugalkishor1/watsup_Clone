@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
 import userRouter from "./routes/userRouter.js"
+import messageRouter from "./routes/messageRoutes.js"
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 
@@ -22,6 +23,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.use("/user",userRouter)
+app.use("/msg",messageRouter)
 
 app.get("/",(req,res)=>{
     res.json("hello")

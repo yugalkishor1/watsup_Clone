@@ -80,13 +80,28 @@ export const registerUser = async(req,res)=>{
     }
 
 }
+
 export const allUsers = async(req,res)=>{
 
     try {
-        const allUsers = await userModel.find()   
+        const allUsers = await userModel.find().sort({username:1})   
 
         if(allUsers){
             return res.json({status:true,allUsers})
+        }
+    } catch (error) {
+        return res.json({status:false,msg:error.message})
+    }
+
+}
+
+export const queryUsers = async(req,res)=>{
+    const {search} = req.body;
+    try {
+        const users = await userModel.find({username:{$regex:`^${search}`,$options:"i"}})  
+
+        if(users.length>0){
+            return res.json({status:true,users})
         }
     } catch (error) {
         return res.json({status:false,msg:error.message})
